@@ -13,6 +13,7 @@ mix.browserSync('http://localhost:' + process.env.APP_PORT)
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-	.sass('resources/sass/app.scss', 'public/css')
+mix.copy('./static/**/*', './public')
+	.js('resources/js/app.js', 'public')
+	.sass('resources/sass/app.scss', 'public')
 	.version()
