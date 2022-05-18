@@ -1,6 +1,6 @@
 services:
-  mariadb:
-    image: mariadb:latest
+  db:
+    image: mariadb
     environment:
       MARIADB_ROOT_PASSWORD: cartridge
       MARIADB_DATABASE: ${DB_DATABASE}
@@ -8,3 +8,18 @@ services:
       MARIADB_PASSWORD: ${DB_PASSWORD}
     ports:
       - ${DB_PORT}:3306
+    volumes:
+      - db:/var/lib/mysql
+  adminer:
+    image: adminer
+    ports:
+      - ${ADMINER_PORT}:8080
+  meilisearch:
+    image: getmeili/meilisearch
+    ports:
+      - ${MEILISEARCH_PORT}:7700
+    volumes:
+      - meilisearch:/var/lib/mysql
+volumes:
+  db:
+  meilisearch:
