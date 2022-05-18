@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1abc7822bd9f28e9a62986817bf04f76",
+    "content-hash": "2a1e8ef91a26cd1b78f1abb0c4eee28f",
     "packages": [
         {
             "name": "brick/math",
@@ -1597,6 +1597,90 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
+        },
+        {
+            "name": "marcreichel/igdb-laravel",
+            "version": "3.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marcreichel/igdb-laravel.git",
+                "reference": "1684caeee553558de00bbc6116fe3c3f556de056"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marcreichel/igdb-laravel/zipball/1684caeee553558de00bbc6116fe3c3f556de056",
+                "reference": "1684caeee553558de00bbc6116fe3c3f556de056",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "~6.0|~7.0",
+                "laravel/framework": "^8.40.0|^9.0",
+                "nesbot/carbon": "^2.53.1",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "brainmaestro/composer-git-hooks": "^2.8",
+                "nunomaduro/collision": "^5.3",
+                "nunomaduro/larastan": "^1.0.0",
+                "orchestra/testbench": "^6.23",
+                "phpunit/phpunit": "^9.5.4",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "extra": {
+                "hooks": {
+                    "config": {
+                        "stop-on-failure": [
+                            "pre-push"
+                        ]
+                    },
+                    "pre-push": [
+                        "composer stan",
+                        "composer test"
+                    ]
+                },
+                "laravel": {
+                    "providers": [
+                        "MarcReichel\\IGDBLaravel\\IGDBLaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MarcReichel\\IGDBLaravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Reichel",
+                    "email": "mail@marcreichel.de"
+                }
+            ],
+            "description": "A Laravel wrapper for version 4 of the IGDB API (Apicalypse) including webhook handling",
+            "keywords": [
+                "api-wrapper",
+                "apicalypse",
+                "igdb",
+                "igdb-api",
+                "laravel",
+                "wrapper"
+            ],
+            "support": {
+                "issues": "https://github.com/marcreichel/igdb-laravel/issues",
+                "source": "https://github.com/marcreichel/igdb-laravel/tree/3.6.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/marcreichel",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-04T11:05:04+00:00"
         },
         {
             "name": "monolog/monolog",
