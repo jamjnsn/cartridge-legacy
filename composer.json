@@ -1,11 +1,8 @@
 {
-	"name": "laravel/laravel",
+	"name": "jamjnsn/cartridge",
 	"type": "project",
-	"description": "The Laravel Framework.",
-	"keywords": [
-		"framework",
-		"laravel"
-	],
+	"description": "Cartridge",
+	"keywords": [],
 	"license": "MIT",
 	"require": {
 		"php": "^8.0.2",
@@ -15,6 +12,7 @@
 		"laravel/sanctum": "^2.14.1",
 		"laravel/scout": "^9.4",
 		"laravel/tinker": "^2.7",
+		"laravel/ui": "^3.4",
 		"marcreichel/igdb-laravel": "^3.6",
 		"meilisearch/meilisearch-php": "^0.23.2"
 	},
