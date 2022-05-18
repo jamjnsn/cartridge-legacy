@@ -78,9 +78,9 @@ class Scan extends Command
 		if ($platformData == null) {
 			return null;
 		} else {
-			Debug::log('Platform identified for ' . $dirName);
 
 			$platform = $this->cachePlatform($platformData);
+			Debug::log("Identified 📂$dir as 🕹️ {$platform->data->name}");
 
 			foreach (scandir($dir) as $file) {
 				if (!is_dir($file)) {
@@ -101,8 +101,7 @@ class Scan extends Command
 								$game
 							);
 
-							Log::info('Added ' . $file);
-							Debug::log('Added ' . $file);
+							Debug::log("Identified 💾$file as 🎮{$game->data->name}");
 						}
 					}
 				}
