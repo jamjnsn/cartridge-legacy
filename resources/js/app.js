@@ -1,8 +1,17 @@
-window.Vue = require('vue').default
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
 // Import axios
-window.axios = require('axios')
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+Vue.prototype.$axios = require('axios')
+Vue.prototype.$axios.defaults.headers.common['X-Requested-With'] =
+	'XMLHttpRequest'
+
+// Routes
+Vue.use(VueRouter)
+import routes from './routes'
+const router = new VueRouter({
+	routes,
+})
 
 // Import all Vue components
 const files = require.context('./', true, /\.vue$/i)
@@ -14,5 +23,5 @@ files
 
 // Create Vue app
 const app = new Vue({
-	el: '#app',
-})
+	router,
+}).$mount('#app')

@@ -15,10 +15,7 @@
 </head>
 <body>
     <div id="app">
-        <nav-bar></nav-bar>
-        <main>
-            @yield('content')
-        </main>
+        @yield('content')
     </div>
 </body>
 </html>

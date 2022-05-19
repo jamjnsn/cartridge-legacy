@@ -1,0 +1,33 @@
+<template>
+	<transition name="fade">
+		<div class="library">
+			<div v-if="isLoading" class="loading-overlay">
+				<loading-animation></loading-animation>
+			</div>
+
+			<game-list v-if="!isLoading" :games="games" />
+		</div>
+	</transition>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+			games: [],
+			isLoading: true,
+		}
+	},
+	mounted() {
+		this.$axios
+			.get('/api/games')
+			.then((res) => {
+				return res.data
+			})
+			.then((games) => {
+				this.games = games
+				this.isLoading = false
+			})
+	},
+}
+</script>

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content">
-</div>
+<nav-bar></nav-bar>
+<main>
+    <router-view :key="$route.fullPath"></router-view>
+</main>
 @endsection
