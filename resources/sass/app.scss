@@ -1,5 +1,6 @@
 @import '~normalize.css';
-@import '~@fontsource/poppins/index.css';
+@import '~@fontsource/poppins/400.css'; // Normal
+@import '~@fontsource/poppins/800.css'; // Bold
 
 :root {
 	color-scheme: dark;
