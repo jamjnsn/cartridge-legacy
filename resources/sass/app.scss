@@ -91,6 +91,15 @@ a {
 
 	& > main {
 		flex: 1 1 auto;
-		padding: 1rem;
 	}
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
 }
