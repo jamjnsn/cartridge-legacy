@@ -8,8 +8,11 @@
 			<not-found v-if="game == null && !isLoading" />
 
 			<div class="game-details" v-if="game != null && !isLoading">
-				<div class="backdrop" :style="screenshotOverlayStyle"></div>
-				<div class="backdrop gradient-overlay"></div>
+				<div
+					class="screenshot-background"
+					:style="screenshotOverlayStyle"
+				></div>
+				<div class="gradient-overlay"></div>
 
 				<div class="columns">
 					<div class="column cover-column">
@@ -31,7 +34,7 @@
 					<div class="column">
 						<h2>{{ game.name }}</h2>
 						<div
-							class="game-description"
+							class="content game-description"
 							v-html="game.description"
 						></div>
 					</div>
@@ -55,7 +58,7 @@ export default {
 		screenshotOverlayStyle() {
 			return {
 				backgroundImage: 'url(' + this.game.screenshot + ')',
-				filter: 'blur(1px) grayscale(1)',
+				filter: 'blur(5px) grayscale(1)',
 				opacity: '0.8',
 				backgroundSize: 'cover',
 				backgroundRepeat: 'no-repeat',
@@ -83,4 +86,74 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.download-button:not(:first-child) {
+	margin-top: 0.5rem;
+}
+
+.game-details {
+	padding: 4rem;
+	margin: 0 auto;
+	max-width: 1024px;
+	position: static;
+
+	h2 {
+		display: inline-block;
+		line-height: 1;
+		padding-bottom: 0.5rem;
+		margin-bottom: 2rem;
+		text-transform: uppercase;
+		font-size: 2.5rem;
+		border-bottom: 0.2em solid $primary;
+		border-image: $fancy-gradient 30;
+		background: $fancy-gradient;
+		color: $primary;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.game-description {
+		font-size: 1.1rem;
+	}
+
+	.game-cover {
+		box-shadow: rgba(0, 0, 0, 0.7) 0px 10px 30px;
+		margin-bottom: 1rem;
+		border-radius: 0.4em;
+	}
+}
+
+.cover-column {
+	padding-right: 3rem;
+}
+
+.screenshot-background,
+.gradient-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 400px;
+	z-index: -1;
+}
+
+.gradient-overlay {
+	background: linear-gradient(
+		177deg,
+		transparentize($main-background, 1) 0%,
+		transparentize($main-background, 0.5) 10%,
+		transparentize($main-background, 0.25) 30%,
+		transparentize($main-background, 0.1) 40%,
+		transparentize($main-background, 0) 55%
+	);
+	height: 455px;
+}
+
+.screenshot-background {
+	height: 400px;
+	top: -10px;
+	width: 140vw;
+	left: 50%;
+	transform: translateX(-50%);
+}
+</style>

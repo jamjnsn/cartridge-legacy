@@ -37,8 +37,26 @@ nav {
 	}
 }
 
+.menu-container {
+	display: flex;
+	align-items: center;
+	z-index: initial;
+
+	&:hover {
+		#menu {
+			display: block;
+		}
+
+		.logo {
+			transform: scale(1.1);
+			filter: drop-shadow(0 0.01em 0.2em $black)
+				drop-shadow(0 0.01em 0.4em $primary);
+		}
+	}
+}
+
 #menu {
-	z-index: 49;
+	z-index: -1;
 	position: absolute;
 	display: none;
 	width: 16em;
@@ -67,24 +85,6 @@ nav {
 
 		&:hover {
 			background: $primary;
-		}
-	}
-}
-
-.menu-container {
-	display: flex;
-	align-items: center;
-	z-index: 10;
-
-	&:hover {
-		#menu {
-			display: block;
-		}
-
-		.logo {
-			transform: scale(1.1);
-			filter: drop-shadow(0 0.01em 0.2em $black)
-				drop-shadow(0 0.01em 0.4em $primary);
 		}
 	}
 }

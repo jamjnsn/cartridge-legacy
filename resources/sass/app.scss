@@ -1,5 +1,14 @@
 @import '~normalize.css';
 
+:root {
+	color-scheme: dark;
+}
+
+::selection {
+	background: $primary;
+	color: $white;
+}
+
 * {
 	position: relative;
 	box-sizing: border-box;
@@ -16,8 +25,8 @@ body {
 	font-family: $font-main;
 	font-size: large;
 	line-height: 1;
-	background-color: $black;
-	color: $white;
+	background-color: $main-background;
+	color: $main-foreground;
 }
 
 h1,
@@ -102,4 +111,68 @@ a {
 .fade-enter,
 .fade-leave-to {
 	opacity: 0;
+}
+
+.is-full-size {
+	width: 100%;
+	height: 100%;
+}
+
+.columns {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+
+	& > .column {
+		flex: 1 1 auto;
+
+		& > .is-one-quarter {
+			flex: 1 1 25%;
+		}
+
+		& > .is-one-half {
+			flex: 1 1 50%;
+		}
+
+		& > .is-one-third {
+			flex: 1 1 33.333%;
+		}
+	}
+}
+
+.buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	& > .button {
+		flex: 1 1 auto;
+
+		&:not(:last-child) {
+			margin-right: 0.5em;
+		}
+	}
+}
+
+.button {
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	padding: 0.75em 1em;
+	color: $white;
+	background-color: $primary;
+	border-radius: 0.2em;
+	transition: background-color 0.1s ease;
+	transform: scale(1);
+
+	&.is-full-width {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		text-align: center;
+	}
+
+	&:hover {
+		background-color: darken($primary, 3%);
+	}
 }

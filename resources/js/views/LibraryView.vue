@@ -31,3 +31,16 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss">
+.library {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 0.75rem;
+}
+
+.results-title {
+	padding: 0.75em;
+}
+</style>

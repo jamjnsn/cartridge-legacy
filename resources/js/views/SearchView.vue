@@ -37,4 +37,15 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.search {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 0.75rem;
+}
+
+.results-title {
+	padding: 0.75em;
+}
+</style>
