@@ -24,5 +24,13 @@ $red: hsl(348, 86%, 61%);
 $primary: hsl(246, 97%, 66%);
 $secondary: hsl(271, 100%, 71%);
 
+$fancy-gradient: linear-gradient(
+	25deg,
+	rgba(102, 86, 252, 1) 0%,
+	rgba(102, 86, 252, 1) 10%,
+	rgba(147, 86, 252, 1) 50%,
+	rgba(204, 84, 247, 1) 100%
+);
+
 $font-main: 'Lato', 'Segoe UI', Candara, 'Bitstream Vera Sans', 'DejaVu Sans',
 	'Bitstream Vera Sans', 'Trebuchet MS', Verdana, 'Verdana Ref', sans-serif;

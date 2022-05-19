@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="search-container">
-			<input type="text" />
+			<input type="text" name="query" placeholder="Search..." />
 		</div>
 	</nav>
 </template>
@@ -66,7 +66,7 @@ nav {
 		}
 
 		&:hover {
-			background-color: $primary;
+			background: $primary;
 		}
 	}
 }
@@ -115,14 +115,14 @@ nav {
 		outline: none;
 		background-color: $grey-darker;
 		border-radius: 0.4em;
-		padding: 0.5em 0.75em;
-		font-size: 1.1em;
-		color: $grey-lighter;
+		padding: 0.75em 1em;
+		color: $grey;
 		border: 0.2em solid transparent;
 
 		transition: border-color 0.1s ease;
 
 		&:focus {
+			color: $grey-lighter;
 			border-color: $primary;
 			box-shadow: 0 0.1em 0.8em transparentize($primary, 0.65);
 		}
