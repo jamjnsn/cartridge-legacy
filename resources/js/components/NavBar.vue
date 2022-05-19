@@ -1,38 +1,110 @@
 <template>
 	<nav>
-		<a href="/" class="logo"><app-logo></app-logo></a>
+		<div class="menu-container">
+			<a href="/" class="logo"><app-logo></app-logo></a>
+			<div id="menu">
+				<a href="#">Settings</a>
+				<a href="#">Admin</a>
+				<a href="#">Logout</a>
+			</div>
+		</div>
+
 		<div class="search-container">
 			<input type="text" />
 		</div>
 	</nav>
 </template>
 
+<script>
+export default {
+	methods: {},
+}
+</script>
+
 <style scoped lang="scss">
+$menu-height: 85px;
+
 nav {
+	z-index: 50;
 	background: $black-light;
-	padding: 1rem;
 	display: flex;
 	flex: 0 0 auto;
 	align-items: center;
+	height: $menu-height;
+
+	& > * {
+		height: 100%;
+	}
+}
+
+#menu {
+	z-index: 49;
+	position: absolute;
+	display: none;
+	width: 16em;
+	top: 100%;
+	padding: 1rem 1rem 1rem 0;
+	border-radius: 0 0 0.5em 0;
+	box-shadow: 0 0.9em 1em hsl(0, 0, 3%);
+	background: $black-light
+		linear-gradient(
+			179deg,
+			rgba(255, 255, 255, 0) 0%,
+			lighten($black-light, 2%) 100%
+		);
+
+	& > a {
+		display: block;
+		padding: 1rem;
+		border-radius: 0 0.25em 0.25em 0;
+		color: $white;
+		background-color: $black-lighter;
+		transition: background 0.1s ease;
+
+		&:not(:last-child) {
+			margin-bottom: 0.5em;
+		}
+
+		&:hover {
+			background-color: $primary;
+		}
+	}
+}
+
+.menu-container {
+	display: flex;
+	align-items: center;
+	z-index: 10;
+
+	&:hover {
+		#menu {
+			display: block;
+		}
+
+		.logo {
+			transform: scale(1.1);
+			filter: drop-shadow(0 0.01em 0.2em $black)
+				drop-shadow(0 0.01em 0.4em $primary);
+		}
+	}
 }
 
 .logo {
 	flex: 0 0 auto;
 	display: block;
-	width: 35px;
-	height: 35px;
+	width: 3.5em;
+	height: auto;
+	margin-left: 1rem;
+	padding: 1rem;
 	transform: scale(1);
-	transition: transform 0.1s ease;
-	margin-right: 1.5rem;
-	margin-left: 0.5rem;
-
-	&:hover {
-		transform: scale(1.1);
-		filter: drop-shadow(0 0.01em 0.4em $primary);
-	}
+	transition: transform 0.1s ease, filter 0.2s ease;
+	filter: drop-shadow(0 0.01em 0.4em $black-light);
 }
 
 .search-container {
+	padding: 1rem;
+	display: flex;
+	align-items: center;
 	flex: 1 1 auto;
 
 	input {
@@ -47,6 +119,8 @@ nav {
 		font-size: 1.1em;
 		color: $grey-lighter;
 		border: 0.2em solid transparent;
+
+		transition: border-color 0.1s ease;
 
 		&:focus {
 			border-color: $primary;
