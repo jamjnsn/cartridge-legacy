@@ -139,7 +139,7 @@ class Scan extends Command
 
 		$platformImagePath = 'platforms/' . $platform->slug;
 
-		if (!Storage::disk('images')->exists($platformImagePath)) {
+		if (!Storage::disk('public')->exists($platformImagePath)) {
 			$logo = IGDBPlatformLogo::where('id', '=', $data->platform_logo)->first();
 			sleep(config('cartridge.api_rate_delay'));
 
@@ -161,7 +161,7 @@ class Scan extends Command
 		$coverImagePath = 'covers/' . $game->slug;
 		$screenshotPath = 'screenshots/' . $game->slug;
 
-		if (!Storage::disk('images')->exists($coverImagePath)) {
+		if (!Storage::disk('public')->exists($coverImagePath)) {
 			$cover = IGDBCover::where('id', '=', $data->cover)->first();
 			sleep(config('cartridge.api_rate_delay'));
 
@@ -170,7 +170,7 @@ class Scan extends Command
 			}
 		}
 
-		if (!Storage::disk('images')->exists($screenshotPath)) {
+		if (!Storage::disk('public')->exists($screenshotPath)) {
 			$screenshot = IGDBScreenshot::where('game', '=', $game->data->id)->first();
 			sleep(config('cartridge.api_rate_delay'));
 
@@ -190,7 +190,7 @@ class Scan extends Command
 		$contents = @file_get_contents($url);
 
 		if ($contents) {
-			Storage::disk('images')->put($filePath . '.' . $pathinfo['extension'], $contents);
+			Storage::disk('public')->put($filePath . '.' . $pathinfo['extension'], $contents);
 		}
 	}
 }
