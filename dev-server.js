@@ -19,7 +19,7 @@ function log(source, data) {
 }
 
 // Run mix
-const mix = spawn('npx', ['mix', 'watch'])
+const mix = spawn('npx', ['mix', 'watch', '--hot'])
 
 mix.stdout.on('data', (data) => {
 	log('mix', data)
