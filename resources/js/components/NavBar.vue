@@ -10,7 +10,19 @@
 		</div>
 
 		<div class="search-container">
-			<input type="text" name="query" placeholder="Search..." />
+			<div class="search" @click="$refs.query.focus()">
+				<inline-svg
+					src="icons/slash.svg"
+					class="search-shortcut-icon"
+				></inline-svg>
+				<input
+					v-model="query"
+					type="text"
+					ref="query"
+					name="query"
+					placeholder="Search..."
+				/>
+			</div>
 		</div>
 	</nav>
 </template>
@@ -18,6 +30,25 @@
 <script>
 export default {
 	methods: {},
+	data() {
+		return {
+			query: '',
+		}
+	},
+	created() {
+		window.addEventListener('keypress', this.onKeyPress)
+	},
+	beforeDestroy() {
+		window.removeEventListener('keypress', this.onKeyPress)
+	},
+	methods: {
+		onKeyPress(e) {
+			if (e.key === '/') {
+				e.preventDefault()
+				this.$refs.query.focus()
+			}
+		},
+	},
 }
 </script>
 
@@ -63,7 +94,7 @@ nav {
 	top: 100%;
 	padding: 1rem 1rem 1rem 0;
 	border-radius: 0 0 0.5em 0;
-	box-shadow: 0 0.9em 1em hsl(0, 0, 3%);
+	box-shadow: 0 0.9em 1em #111;
 	background: $black-light
 		linear-gradient(
 			179deg,
@@ -107,25 +138,47 @@ nav {
 	align-items: center;
 	flex: 1 1 auto;
 
+	.search {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		width: 100%;
+		background-color: $grey-darker;
+		border-radius: 0.4em;
+		padding: 0.75em 1em;
+		border: 0.2em solid transparent;
+		transform: scale(1);
+		transition: transform 0.1s ease;
+
+		&:focus-within {
+			transform: scale(1.01);
+			border-color: $primary;
+			box-shadow: 0 0.1em 0.8em transparentize($primary, 0.65);
+
+			input {
+				color: $grey-lighter;
+			}
+		}
+	}
+
+	.search-shortcut-icon {
+		fill: currentColor;
+		opacity: 0.3;
+		margin-right: 0.5em;
+		height: 1em;
+		width: auto;
+	}
+
 	input {
 		display: block;
 		width: 100%;
 		height: 100%;
 		border: none;
 		outline: none;
-		background-color: $grey-darker;
-		border-radius: 0.4em;
-		padding: 0.75em 1em;
 		color: $grey;
-		border: 0.2em solid transparent;
+		background: transparent;
 
 		transition: border-color 0.1s ease;
-
-		&:focus {
-			color: $grey-lighter;
-			border-color: $primary;
-			box-shadow: 0 0.1em 0.8em transparentize($primary, 0.65);
-		}
 	}
 }
 </style>

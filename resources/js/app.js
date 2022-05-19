@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+// Inline SVG component
+import InlineSvg from 'vue-inline-svg'
+Vue.component('inline-svg', InlineSvg)
+
 // Import axios
 Vue.prototype.$axios = require('axios')
 Vue.prototype.$axios.defaults.headers.common['X-Requested-With'] =

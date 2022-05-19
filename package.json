@@ -15,6 +15,7 @@
 		"sass": "^1.32.11",
 		"sass-loader": "^11.0.1",
 		"vue": "^2.6.12",
+		"vue-inline-svg": "^2.1.0",
 		"vue-loader": "^15.9.8",
 		"vue-router": "^3.5.4",
 		"vue-template-compiler": "^2.6.12"
