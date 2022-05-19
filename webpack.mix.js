@@ -23,7 +23,8 @@ mix.webpackConfig({
 })
 
 mix.copy('./static/**/*', './public')
-	.js('resources/js/app.js', 'public')
+
+mix.js('resources/js/app.js', 'public')
 	.sass('resources/sass/app.scss', 'public')
 	.vue()
 	.sourceMaps()

@@ -5,6 +5,7 @@
 		"dev": "node ./dev-server.js"
 	},
 	"devDependencies": {
+		"@fontsource/poppins": "^4.5.8",
 		"axios": "^0.25",
 		"chalk": "^4.1.2",
 		"dotenv": "^16.0.1",
