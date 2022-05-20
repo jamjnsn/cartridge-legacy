@@ -22,7 +22,7 @@ mix.webpackConfig({
 	},
 })
 
-mix.copy('./static/**/*', './public')
+mix.copy('static', 'public')
 
 mix.js('resources/js/app.js', 'public')
 	.sass('resources/sass/app.scss', 'public')
