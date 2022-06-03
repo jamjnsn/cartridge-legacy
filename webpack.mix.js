@@ -22,6 +22,13 @@ mix.webpackConfig({
 	},
 })
 
+mix.options({
+    hmrOptions: {
+        host: '0.0.0.0',
+		port: 8080
+    },
+})
+
 mix.copy('static', 'public')
 
 mix.js('resources/js/app.js', 'public')

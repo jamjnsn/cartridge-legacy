@@ -39,15 +39,15 @@ return [
 		'public' => [
 			'driver' => 'local',
 			'root' => storage_path('app/public'),
-			'url' => env('APP_URL') . '/storage',
+			'url' => app_url('/storage'),
 			'visibility' => 'public',
 			'throw' => false,
 		],
 
 		'games' => [
 			'driver' => 'local',
-			'root' => env('GAMES_PATH'),
-			'url' => env('APP_URL') . '/files/games',
+			'root' => '/games',
+			'url' => app_url('/files/games'),
 			'visibility' => 'public',
 		],
 

@@ -2,7 +2,7 @@
 	"private": true,
 	"scripts": {
 		"build": "mix --production",
-		"dev": "node ./dev-server.js"
+		"watch": "mix watch --hot"
 	},
 	"devDependencies": {
 		"@fontsource/poppins": "^4.5.8",
