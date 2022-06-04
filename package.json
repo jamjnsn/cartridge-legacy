@@ -2,7 +2,9 @@
 	"private": true,
 	"scripts": {
 		"build": "mix --production",
-		"watch": "mix watch --hot"
+		"watch": "mix watch --hot",
+		"docker:build": "docker build -t cartridge:test . --progress plain | tee docker-build.log",
+		"docker:test": "npm run docker:build && docker run --rm -i -t cartridge:test bash"
 	},
 	"devDependencies": {
 		"@fontsource/poppins": "^4.5.8",

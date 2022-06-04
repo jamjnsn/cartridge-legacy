@@ -1,0 +1,55 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - '${APP_PORT:-80}:80'
+    volumes:
+      - '${GAMES_PATH}:/games:ro'
+      - cartridge:/var/www/cartridge/storage
+    networks:
+      - cartridge
+    depends_on:
+      - mariadb
+      - meilisearch
+  db:
+    image: 'mariadb:10'
+    ports:
+      - '${DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-cartridge}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE:-cartridge}'
+      MYSQL_USER: '${DB_USERNAME:-cartridge}'
+      MYSQL_PASSWORD: '${DB_PASSWORD:-cartridge}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - 'mariadb:/var/lib/mysql'
+    networks:
+      - cartridge
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD:-cartridge}"]
+      retries: 3
+      timeout: 5s
+  meilisearch:
+    image: 'getmeili/meilisearch:latest'
+    ports:
+      - '${MEILISEARCH_PORT:-7700}:7700'
+    volumes:
+      - 'meilisearch:/meili_data'
+    networks:
+      - cartridge
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health"]
+      retries: 3
+      timeout: 5s
+networks:
+  cartridge:
+    driver: bridge
+volumes:
+  cartridge:
+    driver: local
+  mariadb:
+    driver: local
+  meilisearch:
+    driver: local
