@@ -10,6 +10,9 @@ Vue.prototype.$axios = require('axios')
 Vue.prototype.$axios.defaults.headers.common['X-Requested-With'] =
 	'XMLHttpRequest'
 
+// Get CSRF token
+window.csrfToken = document.querySelector('meta[name="csrf-token"]').content
+
 // Routes
 Vue.use(VueRouter)
 import routes from './routes'

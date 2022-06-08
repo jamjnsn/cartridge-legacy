@@ -3,9 +3,12 @@
 		<div class="menu-container">
 			<a href="/" class="logo"><app-logo></app-logo></a>
 			<div id="menu">
-				<a href="#">Settings</a>
-				<a href="#">Admin</a>
-				<a href="#">Logout</a>
+				<form ref="logout" action="/logout" method="POST"><csrf-token /></form>
+				<div class="menu-item"><a href="/settings">Settings</a></div>
+				<div class="menu-item"><a href="/admin">Admin</a></div>
+				<div class="menu-item">
+					<a @click="submitLogout">Logout</a>
+				</div>
 			</div>
 		</div>
 
@@ -28,7 +31,9 @@
 </template>
 
 <script>
+import CsrfToken from './CsrfToken.vue'
 export default {
+  components: { CsrfToken },
 	methods: {},
 	data() {
 		return {
@@ -42,6 +47,10 @@ export default {
 		window.removeEventListener('keypress', this.onKeyPress)
 	},
 	methods: {
+		submitLogout() {
+			console.log(this.$refs.logout)
+			this.$refs.logout.submit()
+		},
 		onKeyPress(e) {
 			if (e.key === '/') {
 				e.preventDefault()
@@ -102,13 +111,20 @@ nav {
 			lighten($black-light, 2%) 100%
 		);
 
-	& > a {
+	& > .menu-item {
 		display: block;
-		padding: 1rem;
 		border-radius: 0 0.25em 0.25em 0;
-		color: $white;
 		background-color: $black-lighter;
 		transition: background 0.1s ease;
+
+		a {
+			cursor: pointer;
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: $white;
+			padding: 1rem;
+		}
 
 		&:not(:last-child) {
 			margin-bottom: 0.5em;
