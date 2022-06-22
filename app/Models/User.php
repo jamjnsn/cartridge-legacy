@@ -11,6 +11,11 @@ class User extends Authenticatable
 {
 	use HasApiTokens, HasFactory, Notifiable;
 
+	public static $validations = [
+		'name' => 'unique:users|min:2|max:30',
+		'password' => 'min:6'
+	];
+
 	/**
 	 * The attributes that are mass assignable.
 	 *

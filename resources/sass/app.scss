@@ -25,7 +25,7 @@ html {
 body {
 	min-height: 100%;
 	font-family: $font-main;
-	font-size: large;
+	font-size: normal;
 	line-height: 1;
 	background-color: $main-background;
 	color: $main-foreground;
@@ -39,6 +39,7 @@ h5,
 h6 {
 	font-size: initial;
 	margin: initial;
+	font-weight: normal;
 }
 
 a {
@@ -90,6 +91,155 @@ a {
 	}
 }
 
+input,
+button {
+	outline: none;
+	border: none;
+	margin: initial;
+	padding: initial;
+}
+
+.flex-table {
+	$border-radius: 0.3em;
+	$background-color: hsl(0%, 0%, 10%);
+	$border-color: lighten($background-color, 5%);
+
+	box-shadow: 0 0.1em 0.8em transparentize($black, 0.75);
+	border: 1px solid $border-color;
+	border-radius: $border-radius;
+	background-color: $background-color;
+
+	.flex-table-header {
+		.flex-table-row {
+			background-color: lighten($background-color, 14%);
+
+			&:first-child {
+				border-radius: $border-radius $border-radius 0 0;
+			}
+		}
+	}
+
+	.flex-table-body {
+		.flex-table-row {
+			background-color: $background-color;
+
+			&:nth-child(odd) {
+				background-color: darken($background-color, 1%);
+			}
+
+			&:last-child {
+				border-radius: 0 0 $border-radius $border-radius;
+			}
+
+			&:hover {
+				background-color: transparentize($white, 0.99);
+			}
+		}
+	}
+
+	.flex-table-row {
+		display: flex;
+		flex-direction: row;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid $border-color;
+		}
+	}
+
+	.flex-table-cell,
+	.flex-table-heading {
+		flex: 0 0 20%;
+		padding: 0.7em;
+		display: flex;
+		align-items: center;
+
+		&:not(:last-child) {
+			border-right: 1px solid $border-color;
+		}
+
+		&.is-smaller {
+			flex: 0 0 5%;
+		}
+
+		&.table-controls {
+			flex: 1 1 auto;
+			justify-content: flex-end;
+
+			a {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: $white;
+				padding: 0.2em;
+				background-color: lighten($background-color, 10%);
+				transition: all 0.15s ease-in-out;
+				border-radius: 0.2em;
+
+				&:not(:last-child) {
+					margin-right: 0.25em;
+				}
+
+				&:hover {
+					background-color: $primary;
+					box-shadow: 0 0.02em 0.8em transparentize($secondary, 0.5);
+				}
+
+				&.is-danger {
+					&:hover {
+						background-color: $danger;
+						box-shadow: 0 0.02em 0.8em transparentize($danger, 0.5);
+					}
+				}
+			}
+		}
+	}
+}
+
+.table {
+	display: table;
+	flex-direction: column;
+	border-collapse: collapse;
+	background-color: $grey-darker;
+	border-radius: 0.4em;
+
+	&.is-full-width {
+		width: 100%;
+	}
+
+	td,
+	th {
+		text-align: left;
+		vertical-align: middle;
+		padding: 0.6em;
+
+		&:not(.options) {
+			width: 100px;
+		}
+	}
+
+	th {
+		font-weight: normal;
+	}
+
+	tbody {
+		tr {
+			background-color: darken($black-lighter, 5%);
+		}
+
+		tr:nth-child(even) {
+			background-color: darken($black-lighter, 7%);
+		}
+
+		td {
+			border-radius: 0.4em;
+		}
+	}
+}
+
+.title {
+	font-size: 2em;
+}
+
 .container {
 	padding: 1rem;
 }
@@ -102,6 +252,83 @@ a {
 
 	& > main {
 		flex: 1 1 auto;
+	}
+}
+
+#admin-panel {
+	$panel-padding: 2rem;
+
+	background: $black-lighter;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+
+	#menu {
+		padding: $panel-padding;
+		flex: 0 0 15%;
+		min-width: 250px;
+		background-color: $black-light;
+
+		.logo {
+			width: 100%;
+			margin-bottom: 2em;
+
+			& > a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				transition: filter 0.5s ease-in-out;
+
+				&:hover {
+					filter: drop-shadow(
+						0 0.01em 1em transparentize($secondary, 0.5)
+					);
+				}
+			}
+
+			img {
+				display: block;
+				width: 100%;
+				height: auto;
+			}
+		}
+
+		.button {
+			background-color: $grey-darker;
+			transition: text-shadow 0.5s ease-in-out,
+				box-shadow 0.5s ease-in-out;
+
+			&:not(:last-child) {
+				margin-bottom: 0.4em;
+			}
+
+			&:hover {
+				z-index: 1;
+				background-color: $primary;
+				box-shadow: 0 0.01em 2em transparentize($secondary, 0.7);
+				text-shadow: 0 0.01em 1em transparentize($white, 0.5);
+
+				& > a {
+					color: $white;
+					background-color: transparent;
+				}
+			}
+		}
+	}
+
+	main {
+		.page-title {
+			background: $grey-darker;
+			padding: $panel-padding;
+		}
+
+		.page-content {
+			padding: $panel-padding;
+		}
+
+		flex: 1 1 auto;
+		overflow-y: auto;
 	}
 }
 
@@ -148,7 +375,9 @@ a {
 	align-items: center;
 
 	& > .button {
-		flex: 1 1 auto;
+		flex: 0 0 auto;
+		display: flex;
+		height: 100%;
 
 		&:not(:last-child) {
 			margin-right: 0.5em;
@@ -167,14 +396,93 @@ a {
 	transition: background-color 0.1s ease;
 	transform: scale(1);
 
+	& > .icon {
+		margin-right: 0.3em;
+	}
+
+	&.is-link {
+		background-color: transparent;
+
+		&:hover {
+			background-color: $grey-darker;
+		}
+	}
+
 	&.is-full-width {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		width: 100%;
 		text-align: center;
 	}
 
 	&:hover {
 		background-color: darken($primary, 3%);
+	}
+}
+
+.field {
+	&.is-inline {
+		display: flex;
+		flex-direction: row;
+	}
+
+	&:not(:last-child) {
+		margin-bottom: 1.5em;
+	}
+
+	.label {
+		color: $white-darker;
+		display: block;
+		margin-bottom: 0.4em;
+		padding-left: 0.2em;
+		font-size: 0.9em;
+		font-weight: bold;
+		letter-spacing: 0.02em;
+	}
+
+	.input {
+		display: block;
+		background-color: darken($black-lighter, 4%);
+		padding: 0.4em 0.6em;
+		border-radius: 0.2em;
+		border: 0.15em solid darken($black-lighter, 5%);
+		transition: all 0.1s ease;
+		color: $grey-light;
+
+		&:focus {
+			color: $white;
+			border-color: $primary;
+		}
+	}
+}
+
+.flashes {
+	position: fixed;
+	bottom: 1em;
+	width: 100%;
+	z-index: 50;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.alert {
+	background-color: $grey-dark;
+	color: $white;
+	padding: 1em;
+	flex: 1 1 auto;
+	width: 400px;
+	max-width: 100%;
+	border-radius: 0.2em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	&.is-danger,
+	&.is-error {
+		background-color: $danger;
+		color: $white;
 	}
 }

@@ -3,8 +3,9 @@
 		<div class="menu-container">
 			<a href="/" class="logo"><app-logo></app-logo></a>
 			<div id="menu">
-				<form ref="logout" action="/logout" method="POST"><csrf-token /></form>
-				<div class="menu-item"><a href="/settings">Settings</a></div>
+				<form ref="logout" action="/logout" method="POST">
+					<csrf-token />
+				</form>
 				<div class="menu-item"><a href="/admin">Admin</a></div>
 				<div class="menu-item">
 					<a @click="submitLogout">Logout</a>
@@ -33,7 +34,7 @@
 <script>
 import CsrfToken from './CsrfToken.vue'
 export default {
-  components: { CsrfToken },
+	components: { CsrfToken },
 	methods: {},
 	data() {
 		return {
