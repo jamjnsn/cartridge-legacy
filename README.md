@@ -22,9 +22,8 @@ Cartridge is currently in development and not yet ready for use. Here's a rough 
 Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) for a convenient dev environment. By default, the app runs on port 80 and HMR runs on port 8080.
 
 ### Requirements
-- Node 18 + npm (Easier with a Node version manager, such as [fnm](https://github.com/Schniz/fnm))
-- PHP 8
-- [Composer](https://getcomposer.org/)
+- PHP 8.1 _(Optional)_
+- [Composer](https://getcomposer.org/) _(Optional)_
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - API key from [IGDB](https://api-docs.igdb.com/#about)
@@ -34,11 +33,24 @@ Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) f
 	```sh
 	git clone https://github.com/jamjnsn/cartridge.git
 	```
-2. Install dependencies  
+2. Install Composer packages using your local Composer:
 	```sh
 	composer install
 	```
-3. Create `.env` file.  
+	OR using a temporary container:
+	```sh
+	docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+	```
+3. Install Node packages
+	```sh
+	sail npm i
+	```
+5. Create `.env` file.  
 	```
 	# Volumes
 	GAMES_PATH=/path/to/roms
@@ -49,7 +61,7 @@ Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) f
 	```
 4. Initialize application. (__Note:__ This should be run outside of the container to ensure the storage symlinks are created properly.)
 	```sh
-	php artisan cart:init
+	sail artisan cart:init
 	```
 5. Start containers with Sail.  
 	```sh
