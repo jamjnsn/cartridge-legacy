@@ -47,21 +47,19 @@ Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) f
 	TWITCH_CLIENT_ID=Your Client ID
 	TWITCH_CLIENT_SECRET=Your Client Secret
 	```
-4. Start containers with Sail.  
+4. Initialize application. (__Note:__ This should be run outside of the container to ensure the storage symlinks are created properly.)
+	```sh
+	php artisan cart:init
+	```
+5. Start containers with Sail.  
 	```sh
 	alias sail="bash vendor/bin/sail" # Optional: add alias to your shell profile
 	sail up -d
-	```
-5. Initialize application.  
-	```sh
-	sail artisan cart:init
 	```
 6. Start HMR.
 	```
 	sail npm run watch
 	```
-
-	
 
 ## Built With
 * [Vue.js](https://vuejs.org/)
