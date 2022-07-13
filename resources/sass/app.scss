@@ -44,6 +44,7 @@ h6 {
 
 a {
 	text-decoration: none;
+	color: currentColor;
 }
 
 // Non-layout content
@@ -83,7 +84,11 @@ a {
 	}
 
 	a {
-		color: $secondary;
+		color: $primary;
+
+		&:visited {
+			color: $secondary;
+		}
 
 		&:hover {
 			text-decoration: underline;
@@ -97,6 +102,9 @@ button {
 	border: none;
 	margin: initial;
 	padding: initial;
+	background: none;
+	display: inline;
+	line-height: 1;
 }
 
 .flex-table {
@@ -164,32 +172,10 @@ button {
 		&.table-controls {
 			flex: 1 1 auto;
 			justify-content: flex-end;
+			align-items: center;
 
-			a {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: $white;
-				padding: 0.2em;
-				background-color: lighten($background-color, 10%);
-				transition: all 0.15s ease-in-out;
-				border-radius: 0.2em;
-
-				&:not(:last-child) {
-					margin-right: 0.25em;
-				}
-
-				&:hover {
-					background-color: $primary;
-					box-shadow: 0 0.02em 0.8em transparentize($secondary, 0.5);
-				}
-
-				&.is-danger {
-					&:hover {
-						background-color: $danger;
-						box-shadow: 0 0.02em 0.8em transparentize($danger, 0.5);
-					}
-				}
+			&> *:not(:last-child) {
+				margin-right: 0.25em;
 			}
 		}
 	}
@@ -390,6 +376,7 @@ button {
 	cursor: pointer;
 	display: inline-flex;
 	align-items: center;
+	justify-content: center;
 	padding: 0.75em 1em;
 	color: $white;
 	background-color: $primary;
@@ -397,16 +384,12 @@ button {
 	transition: background-color 0.1s ease;
 	transform: scale(1);
 
-	& > .icon {
+	& > .icon:not(:last-child) {
 		margin-right: 0.3em;
 	}
 
-	&.is-link {
-		background-color: transparent;
-
-		&:hover {
-			background-color: $grey-darker;
-		}
+	&.is-small {
+		padding: 0.4em;
 	}
 
 	&.is-full-width {
@@ -418,6 +401,33 @@ button {
 
 	&:hover {
 		background-color: darken($primary, 3%);
+	}
+
+	&.is-link {
+		background-color: transparent;
+
+		&:hover {
+			background-color: $grey-darker;
+		}
+	}
+
+	&.is-danger {
+		background-color: $danger;
+		color: $white;
+
+		&:hover {
+			background-color: darken($danger, 3%);
+		}
+	}
+
+	&.is-disabled, &:disabled {
+		background-color: $grey-darker;
+		color: $grey-light;
+		cursor: not-allowed;
+
+		&:hover {
+			background-color: $grey-darker;
+		}
 	}
 }
 

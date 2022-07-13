@@ -30,7 +30,12 @@ Route::prefix('admin')->group(function () {
 	});
 
 	Route::post('/users/{user}', [UsersController::class, 'update'])->missing(function (Request $request) {
-		$request->session()->flash('status', 'User not found.');
+		$request->session()->flash('status', ['type' => 'error', 'message' => 'User not found.']);
+		return Redirect::route('admin.users');
+	});
+
+	Route::delete('/users/{user}', [UsersController::class, 'delete'])->missing(function (Request $request) {
+		$request->session()->flash('status', ['type' => 'error', 'message' => 'User not found.']);
 		return Redirect::route('admin.users');
 	});
 });

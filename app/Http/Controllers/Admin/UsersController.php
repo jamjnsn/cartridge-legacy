@@ -84,4 +84,16 @@ class UsersController extends Controller
 			echo "Error!"; // TODO: Handle this.
 		}
 	}
+
+	public function delete(User $user, Request $request) {
+		if($user->id === 1) {
+			$request->session()->flash('status', ['type' => 'error', 'message' =>  'Unable to delete primary user.']);
+			return redirect('/admin/users');
+		} else {
+			$user_name = $user->name;
+			$user->delete();
+			$request->session()->flash('status', ['type' => 'error', 'message' => 'Deleted user ' . $user_name . '.']);
+			return redirect('/admin/users');
+		}
+	}
 }
