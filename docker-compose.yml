@@ -58,6 +58,12 @@ services:
             test: ["CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health"]
             retries: 3
             timeout: 5s
+    adminer:
+      image: adminer
+      ports:
+        - '${ADMINER_PORT:-8181}:8080'
+      networks:
+        - sail
 networks:
     sail:
         driver: bridge
