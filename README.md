@@ -22,11 +22,12 @@ Cartridge is currently in development and not yet ready for use. Here's a rough 
 Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) for a convenient dev environment. By default, the app runs on port 80 and HMR runs on port 8080.
 
 ### Requirements
+- Node 18 + npm (Easier with a Node version manager, such as [fnm](https://github.com/Schniz/fnm))
+- PHP 8
 - [Composer](https://getcomposer.org/)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - API key from [IGDB](https://api-docs.igdb.com/#about)
-- Node 18 + npm (Easier with a Node version manager, such as [fnm](https://github.com/Schniz/fnm))
 
 ### Instructions
 1. Clone the repository.  
