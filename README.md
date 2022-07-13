@@ -26,6 +26,7 @@ Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) f
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - API key from [IGDB](https://api-docs.igdb.com/#about)
+- Node 18 + npm (Easier with a Node version manager, such as [fnm](https://github.com/Schniz/fnm))
 
 ### Instructions
 1. Clone the repository.  
