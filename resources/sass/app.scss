@@ -249,6 +249,7 @@ button {
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
+	background-color: $black;
 
 	& > main {
 		flex: 1 1 auto;
@@ -256,9 +257,9 @@ button {
 }
 
 #admin-panel {
+	background-color: $main-background;
 	$panel-padding: 2rem;
 
-	background: $black-lighter;
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -420,32 +421,46 @@ button {
 	}
 }
 
+.form {
+}
+
 .field {
+	max-width: 300px;
+	width: 100%;
+	padding: 0.25em;
+
 	&.is-inline {
 		display: flex;
 		flex-direction: row;
+		align-items: center;
+	}
+
+	&.has-toggle {
+		@extend .is-inline;
+		justify-content: space-between;
 	}
 
 	&:not(:last-child) {
-		margin-bottom: 1.5em;
+		padding-bottom: 0.8em;
+		border-bottom: 0.02em solid lighten($main-background, 4%);
+		margin-bottom: 0.8em;
 	}
 
 	.label {
 		color: $white-darker;
 		display: block;
 		margin-bottom: 0.4em;
-		padding-left: 0.2em;
-		font-size: 0.9em;
-		font-weight: bold;
+		padding-left: 0.1em;
 		letter-spacing: 0.02em;
 	}
 
 	.input {
+		width: 100%;
 		display: block;
-		background-color: darken($black-lighter, 4%);
+		background-color: $grey-darker;
 		padding: 0.4em 0.6em;
 		border-radius: 0.2em;
-		border: 0.15em solid darken($black-lighter, 5%);
+		border: 0.15em solid transparent;
 		transition: all 0.1s ease;
 		color: $grey-light;
 
@@ -484,5 +499,76 @@ button {
 	&.is-error {
 		background-color: $danger;
 		color: $white;
+	}
+}
+
+.page-controls {
+	margin-bottom: 1em;
+}
+
+.toggle {
+	$transition-speed: 0.3s;
+	$border-radius: 1em;
+	$width: 40px;
+	$height: 20px;
+	$padding: 4px;
+
+	$handle-size: $height - ($padding * 2);
+
+	display: inline-block;
+	width: $width;
+	height: $height;
+	cursor: not-allowed;
+
+	input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	.toggle-slider {
+		border-radius: $border-radius;
+		transition: $transition-speed;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: $grey-darker;
+
+		&:before {
+			border-radius: $border-radius;
+			transition: $transition-speed;
+			position: absolute;
+			content: "";
+			height: $handle-size;
+			width: $handle-size;
+			left: $padding;
+			bottom: $padding;
+			background-color: $grey-dark;
+		}
+	}
+
+	&:not(.is-disabled) {
+		cursor: pointer;
+
+		input {
+			&:checked + .toggle-slider {
+				background-color: $primary;
+			}
+
+			&:checked + .toggle-slider:before {
+				transform: translateX($width - ($padding * 2) - $handle-size);
+				background-color: $white;
+			}
+		}
+
+		.toggle-slider {
+			background-color: $grey-darker;
+
+			&:before {
+				background-color: $grey-light;
+			}
+		}
 	}
 }

@@ -6,6 +6,14 @@
 </div>
 
 <div class="page-content">
+	<div class="page-controls">
+		<div class="buttons">
+			<a href="/admin/users/new" class="button">
+				<icon type="user-plus"></icon> <span>New</span>
+			</a>
+		</div>
+	</div>
+
     <div class="flex-table">
         <div class="flex-table-header">
             <div class="flex-table-row">

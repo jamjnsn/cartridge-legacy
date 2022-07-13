@@ -32,12 +32,15 @@ class UsersController extends Controller
 		$rules['name'] .= '|required';
 		$rules['password'] .= '|confirmed|required';
 
+
 		$validated = $request->validate($rules);
 		$validated['password'] = Hash::make($validated['password']);
 
-		$user = User::create($validated);
+		$user = new User;
+		$user->fill($validated);
+		$user->is_admin = $request->is_admin === 'true';
 
-		if ($user) {
+		if ($user->save()) {
 			return redirect('/admin/users');
 		} else {
 			echo "Error!"; // TODO: Handle this.
@@ -72,7 +75,10 @@ class UsersController extends Controller
 			$validated['password'] = Hash::make($validated['password']);
 		}
 
-		if ($user->update($validated)) {
+		$user->fill($validated);
+		$user->is_admin = $request->is_admin === 'true';
+
+		if ($user->save()) {
 			return redirect('/admin/users');
 		} else {
 			echo "Error!"; // TODO: Handle this.
