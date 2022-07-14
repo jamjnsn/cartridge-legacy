@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('admin')->group(function () {
 	Route::view('/', 'admin.dashboard');
+
 	Route::get('/users', [UsersController::class, 'index'])->name('admin.users');
 
 	Route::get('/users/new', [UsersController::class, 'new'])->name('admin.users.new');
@@ -38,4 +40,6 @@ Route::prefix('admin')->group(function () {
 		$request->session()->flash('status', ['type' => 'error', 'message' => 'User not found.']);
 		return Redirect::route('admin.users');
 	});
+
+	Route::resource('platforms', App\Http\Controllers\Admin\PlatformsController::class);
 });
