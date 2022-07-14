@@ -22,6 +22,7 @@
 
     <form action="{{ $is_edit_mode ? route('platforms.update', $platform) : route('platforms.store') }}" method="POST">
         @csrf
+		@method($is_edit_mode ? 'PATCH' : 'POST')
 
         <x-forms.text-input name="name" label="Name" value="{{ old('name') ?? $platform->name }}" />
 		<x-forms.text-input name="slug" label="IGDB Slug" value="{{ old('slug') ?? $platform->slug }}" />

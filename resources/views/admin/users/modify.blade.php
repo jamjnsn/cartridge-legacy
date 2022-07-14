@@ -20,8 +20,9 @@
     </div>
     @endif
 
-    <form action="/admin/users/{{ $is_edit_mode ? $user->id : 'new' }}" method="POST">
+    <form action="{{ $is_edit_mode ? route('users.update', $user) : route('users.store') }}" method="POST">
         @csrf
+		@method($is_edit_mode ? 'PATCH' : 'POST')
 
         <x-forms.text-input name="name" label="Username" value="{{ old('name') ?? $user->name }}" />
         <x-forms.text-input name="password" type="password" label="Password" />
@@ -33,7 +34,7 @@
             <button class="button">
                 <icon type="save"></icon> Save
             </button>
-            <a href="/admin/users" class="button is-link">Cancel</a>
+            <a href="{{ route('users.index') }}" class="button is-link">Cancel</a>
         </div>
     </form>
 </div>

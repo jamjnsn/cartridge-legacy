@@ -11,22 +11,18 @@ use Illuminate\Validation\ValidationException;
 
 class UsersController extends Controller
 {
-	public function __construct()
-	{
-	}
-
 	public function index(Request $request)
 	{
 		$users = User::all();
 		return view('admin.users.index', ['users' => $users]);
 	}
 
-	public function new()
+	public function create()
 	{
 		return view('admin.users.modify', ['user' => new User(), 'is_edit_mode' => false]);
 	}
 
-	public function create(Request $request)
+	public function store(Request $request)
 	{
 		$rules = User::$validations;
 		$rules['name'] .= '|required';
@@ -41,7 +37,7 @@ class UsersController extends Controller
 		$user->is_admin = $request->is_admin === 'true';
 
 		if ($user->save()) {
-			return redirect('/admin/users');
+			return redirect()->route('users.index');
 		} else {
 			echo "Error!"; // TODO: Handle this.
 		}
@@ -79,21 +75,21 @@ class UsersController extends Controller
 		$user->is_admin = $request->is_admin === 'true';
 
 		if ($user->save()) {
-			return redirect('/admin/users');
+			return redirect()->route('users.index');
 		} else {
 			echo "Error!"; // TODO: Handle this.
 		}
 	}
 
-	public function delete(User $user, Request $request) {
+	public function destroy(User $user, Request $request) {
 		if($user->id === 1) {
 			$request->session()->flash('status', ['type' => 'error', 'message' =>  'Unable to delete primary user.']);
-			return redirect('/admin/users');
+			return redirect()->route('users.index');
 		} else {
 			$user_name = $user->name;
 			$user->delete();
 			$request->session()->flash('status', ['type' => 'error', 'message' => 'Deleted user ' . $user_name . '.']);
-			return redirect('/admin/users');
+			return redirect()->route('users.index');
 		}
 	}
 }
