@@ -15,7 +15,7 @@ Cartridge is currently in development and not yet ready for use. Here's a rough 
 - ~~Game importer~~
 - ~~Game browser & downloads~~
 - Game search
-- User administration (create, edit, delete)
+- ~~User administration (create, edit, delete)~~
 - Manual IGDB match fix
 
 ## Development
