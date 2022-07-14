@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Console\CartridgeCommand;
 use Illuminate\Support\Facades\Artisan;
 
 use App\Models\User;
 
-class Initialize extends Command
+class Initialize extends CartridgeCommand
 {
 	/**
 	 * The name and signature of the console command.

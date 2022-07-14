@@ -9,7 +9,7 @@ class Platform extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['data'];
+    protected $fillable = ['data', 'name', 'slug', 'directory_name'];
 
     protected $casts = [
         'data' => 'object'
@@ -19,6 +19,10 @@ class Platform extends Model
     {
         return Game::whereFileExistsForPlatform($this)->get();
     }
+
+	public function getLogoPathAttribute() {
+		return 'platforms/' . $this->slug;
+	}
 
     public static function whereFileExists()
     {

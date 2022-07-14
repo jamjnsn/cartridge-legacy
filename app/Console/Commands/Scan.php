@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Debug;
+use App\LogLevel;
 
-use Illuminate\Console\Command;
+use App\Console\CartridgeCommand;
 use Illuminate\Support\Facades\Log;
 
 use MarcReichel\IGDBLaravel\Models\Game as IGDBGame;
@@ -18,7 +19,7 @@ use App\Models\Game;
 use App\Models\Platform;
 use Illuminate\Support\Facades\Storage;
 
-class Scan extends Command
+class Scan extends CartridgeCommand
 {
 	/**
 	 * The name and signature of the console command.
@@ -52,7 +53,7 @@ class Scan extends Command
 	public function handle()
 	{
 		Log::info('Started scan');
-		Debug::log('Scanning for new files...');
+		$this->message('Scanning for new files', LogLevel::Info);
 
 		$gamesPath = config('cartridge.games_path');
 
@@ -72,44 +73,76 @@ class Scan extends Command
 	{
 		$dirName = basename($dir);
 		$relativeDir = str_replace(config('cartridge.games_path'), '', $dir);
-		$platformData = IGDBPlatform::where('name', $dirName)->orWhere('alternative_name', $dirName)->first();
 		sleep(config('cartridge.api_rate_delay'));
 
-		if ($platformData == null) {
-			return null;
+		// Get platform if it exists
+		$platform = Platform::firstOrNew(['directory_name' => $dirName]);
+
+		if($platform->exists) {
+			// Get IGDB data from existing platform slug
+			$platformData = IGDBPlatform::where('slug', $platform->slug)->first();
+
+			// No IGDB platform data found
+			if ($platformData == null) {
+				$this->message("Existing platform with slug {$platform->slug} was not found on IGDB", LogLevel::Warning);
+				return null;
+			}
 		} else {
+			// Attempt to identify platform on IGDB based on directory name
+			$platformData = IGDBPlatform::where('name', $dirName)->orWhere('alternative_name', $dirName)->first();
 
-			$platform = $this->cachePlatform($platformData);
-			Debug::log("Identified 📂$dir as 🕹️ {$platform->data->name}");
+			// No IGDB platform data found
+			if ($platformData == null) {
+				$this->message("Could not identify platform for directory '{$dirName}'", LogLevel::Warning);
+				return null;
+			} else {
+				$this->message("🕹️ Adding platform: {$platformData->name} from $dir", LogLevel::Info);
 
-			foreach (scandir($dir) as $file) {
-				if (!is_dir($file)) {
-					$gamePath = $relativeDir . '/' . $file;
+				// Add found platform data
+				$platform->slug = $platformData->slug;
+				$platform->name = $platformData->name;
+				$platform->directory_name = $dirName;
+			}
+		}
 
-					if (!File::where('path', '=', $gamePath)->exists()) {
-						$gameData = $this->identifyGame($file, $platform);
+		// Update platform metadata and save
+		$platform->data = json_decode($platformData->toJson());
+		$platform->save();
 
-						if ($gameData == null) {
-							Log::alert('No match found for ' . $file);
-							Debug::log('No match found for ' . $file);
-						} else {
-							$game = $this->cacheGame($gameData, $platform);
+		// Fetch logo image if one doesn't exist
+		if (!Storage::disk('public')->exists($platform->logo_path)) {
+			$logo = IGDBPlatformLogo::where('id', '=', $platform->data->platform_logo)->first();
+			sleep(config('cartridge.api_rate_delay'));
 
-							$this->createFileRecord(
-								$gamePath,
-								$platform,
-								$game
-							);
+			if ($logo != null) {
+				$this->downloadImage($logo->image_id, $platform->logo_path, 'cover_big');
+			}
+		}
 
-							Debug::log("Identified 💾$file as 🎮{$game->data->name}");
-						}
+		foreach (scandir($dir) as $file) {
+			if (!is_dir($file)) {
+				$gamePath = $relativeDir . '/' . $file;
+
+				if (!File::where('path', '=', $gamePath)->exists()) {
+					$gameData = $this->identifyGame($file, $platform);
+
+					if ($gameData == null) {
+						$this->message('No match found for ' . $gamePath, LogLevel::Warning);
+					} else {
+						$game = $this->updateGame($gameData, $file);
+
+						$this->updateFileRecord(
+							$gamePath,
+							$platform,
+							$game
+						);
 					}
 				}
 			}
 		}
 	}
 
-	private function createFileRecord($filePath, $platform, $game)
+	private function updateFileRecord($filePath, $platform, $game)
 	{
 		$file = File::firstOrNew(['path' => $filePath]);
 		$file->path = $filePath;
@@ -130,31 +163,17 @@ class Scan extends Command
 		return $match;
 	}
 
-	private function cachePlatform($data)
-	{
-		$platform = Platform::firstOrNew(['slug' => $data->slug]);
-		$platform->slug = $data->slug;
-		$platform->data = json_decode($data->toJson());
-		$platform->save();
-
-		$platformImagePath = 'platforms/' . $platform->slug;
-
-		if (!Storage::disk('public')->exists($platformImagePath)) {
-			$logo = IGDBPlatformLogo::where('id', '=', $data->platform_logo)->first();
-			sleep(config('cartridge.api_rate_delay'));
-
-			if ($logo != null) {
-				$this->downloadImage($logo->image_id, $platformImagePath, 'cover_big');
-			}
-		}
-
-		return $platform;
-	}
-
-	private function cacheGame($data)
+	private function updateGame($data, $filename)
 	{
 		$game = Game::firstOrNew(['slug' => $data->slug]);
-		$game->slug = $data->slug;
+
+		// Set game name and slug if this game is newly added
+		if(!$game->exists) {
+			$this->message("🎮 Adding game: {$data->name}", LogLevel::Info);
+			$game->name = $data->name;
+			$game->slug = $data->slug;
+		}
+
 		$game->data = json_decode($data->toJson());
 		$game->save();
 
