@@ -1,3 +1,8 @@
+### ⚠️ Deprecated
+New repository at [jamjnsn/cartridge](https://github.com/jamjnsn/cartridge).
+
+---
+
 <div align="center">
   <img src="static/images/logo-full.png" alt="Logo" width="400" height="auto">
   <p align="center">
